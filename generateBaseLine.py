@@ -103,7 +103,7 @@ def authenticated_web(data):
 
     web_list = web_list[1:]
 
-    for _ in range(random.randint(14, 15)):
+    for _ in range(random.randint(2, 30)):
         rand_choice = random.choice(web_list)
         req = build_request(xff, variables['url'], user_agent, ip, web_traffic[rand_choice].copy())
         response_code = session_requests(req, web_traffic[rand_choice]['body'], xff=xff)
@@ -117,5 +117,5 @@ if __name__ == "__main__":
     with open(path.join(__folder__, "data.json")) as json_file:
         data = json.load(json_file)
     while True:
-        web(data)
-        time.sleep(random.randint(1, 5))
+        authenticated_web(data)
+        time.sleep(random.randint(5, 10))
