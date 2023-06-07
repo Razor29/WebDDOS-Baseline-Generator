@@ -32,7 +32,7 @@ def generate_random_public_ipv4_address():
 
 def build_request(xff, baseURL, user_agent ,ip, request_info):
     if "@num1" in request_info['uri']:
-        request_info['uri'] = request_info['uri'].replace("@num1", str(random.randint(1,256)))
+        request_info['uri'] = request_info['uri'].replace("@num1", str(random.randint(1,199)))
     if "@num2" in request_info['uri']:
         request_info['uri'] = request_info['uri'].replace("@num2", str(random.randint(1,40)))
     request_info['headers'] = request_info.get('headers', {})
@@ -77,17 +77,36 @@ def session_requests(request_info, body={}, body_json=False ,xff="", ip=""):
                 response = getattr(session, method.lower())(url, data=body)
 
             status_code = int(response.status_code)
+            
+            #print(f"Request: {method} {url}")
+            #print("Headers:")
+            #print(headers)
+            #print(f"Body: {body}")
+            #print()
+            
+            #print(f"Response: {status_code} {response.reason}")
+            #print("Headers:")
+            #print(dict(response.headers))
+            #print("Body:")
+            #try:
+            #    print(response.json())
+            #except json.JSONDecodeError:
+            #    print(response.text)
+
             return status_code
 
         except requests.exceptions.RequestException as e:
+            print(e)
             session.close()
         except KeyError as e:
+            print(e)
             session.close()
 
 def random_list_item(data_list):
     return data_list[random.randint(0,len(data_list)-1)]
 
 def authenticated_web(data):
+    print("authenticated session")
     variables = data['variables'].copy()
     web_traffic = data['web_traffic'].copy()
     ip = generate_random_public_ipv4_address()
@@ -98,7 +117,7 @@ def authenticated_web(data):
     req = build_request(xff, variables['url'], user_agent, ip, web_traffic[web_list[0]].copy())
     response_code = session_requests(req, web_traffic[web_list[0]]['body'], xff=xff, ip=ip)
 
-    print(f"Initial request: {req}")
+    #print(f"Initial request: {req}")
     print(f"Initial response code: {response_code}")
 
     web_list = web_list[1:]
@@ -106,10 +125,33 @@ def authenticated_web(data):
     for _ in range(random.randint(2, 30)):
         rand_choice = random.choice(web_list)
         req = build_request(xff, variables['url'], user_agent, ip, web_traffic[rand_choice].copy())
-        response_code = session_requests(req, web_traffic[rand_choice]['body'], xff=xff)
+        response_code = session_requests(req, web_traffic[rand_choice]['body'], xff=xff, ip=ip)
 
-        print(f"Request: {req}")
+        #print(f"Request: {req}")
         print(f"Response code: {response_code}")
+        time.sleep(random.randint(2, 15))
+
+    session.close()
+
+def non_authenticated_web(data):
+    print("non authenticated session")
+    variables = data['variables'].copy()
+    web_traffic = data['authenticated_web_traffic'].copy()
+    ip = generate_random_public_ipv4_address()
+    user_agent = random_list_item(variables['user-agents'])
+    xff = variables['xff']
+    web_list = list(web_traffic.keys())
+    session = requests.session()
+
+
+    for _ in range(random.randint(1, 30)):
+        rand_choice = random.choice(web_list)
+        req = build_request(xff, variables['url'], user_agent, ip, web_traffic[rand_choice].copy())
+        response_code = session_requests(req, web_traffic[rand_choice]['body'], xff=xff, ip=ip)
+
+        #print(f"Request: {req}")
+        print(f"Response code: {response_code}")
+        time.sleep(random.randint(2, 15))
 
     session.close()
 
@@ -117,5 +159,7 @@ if __name__ == "__main__":
     with open(path.join(__folder__, "data.json")) as json_file:
         data = json.load(json_file)
     while True:
-        authenticated_web(data)
-        time.sleep(random.randint(5, 10))
+        func_list = [non_authenticated_web, authenticated_web]
+        
+        random.choice(func_list)(data)
+        time.sleep(random.randint(10, 400))

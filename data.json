@@ -1,5 +1,5 @@
 {   
-    "web_traffic": {
+    "authenticated_web_traffic": {
         "000 - POST login": {
             "method": "POST",
             "uri": "/user/login",
@@ -86,8 +86,70 @@
         }
     
     }, 
+    "web_traffic": {
+        "000 - GET baseURL": {
+            "method": "GET",
+            "uri": "/",
+            "headers": {
+                        "Upgrade-Insecure-Requests": "1",
+                        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+                        "Accept-Language": "en-US,en;q=0.9"
+                    },
+            "body": ""
+        },
+        "001 - GET login": {
+            "method": "GET",
+            "uri": "/user/login",
+            "headers": {
+                "Upgrade-Insecure-Requests": "1",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+                "Accept-Language": "en-US,en;q=0.9"
+            },
+            "body": ""
+        },
+		"002 - /product/view?id=": {
+            "method": "GET",
+            "uri": "/product/view?id=@num1",
+            "headers": {
+                "Upgrade-Insecure-Requests": "1",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+                "Accept-Language": "en-US,en;q=0.9"
+            },
+            "body": ""
+        },
+		"003 - /faq": {
+            "method": "GET",
+            "uri": "/faq",
+            "headers": {
+                "Upgrade-Insecure-Requests": "1",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+                "Accept-Language": "en-US,en;q=0.9"
+            },
+            "body": ""
+        },
+		"004 - /category/view?id=": {
+            "method": "GET",
+            "uri": "/category/view?id=@num2",
+            "headers": {
+                "Upgrade-Insecure-Requests": "1",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+                "Accept-Language": "en-US,en;q=0.9"
+            },
+            "body": ""
+        },
+		"005 - /wishlist": {
+            "method": "GET",
+            "uri": "/wishlist",
+            "headers": {
+                "Upgrade-Insecure-Requests": "1",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+                "Accept-Language": "en-US,en;q=0.9"
+            },
+            "body": ""
+        }
+    },
     "variables": {
-        "url": "https://bypassdemo.radware.net",
+        "url": "https://autodemo.radware.net",
         "xff": "x-forwarded-for",
         "usernames": ["admin","user","test","demo","guest","root","admin1","admin2","admin3","user1","user2","test1","test2","demo1","guest1","root1","admin4","admin5","admin6","user3","user4","test3","test4","demo2","guest2","root2","admin7","admin8","admin9","user5","user6","test5","test6","demo3","guest3","root3","admin10","admin11","admin12","user7","user8","test7","test8","demo4","guest4","root4","admin13","admin14","admin15","user9","user10","test9","test10","demo5","guest5","root5","admin16","admin17","admin18","user11","user12","test11","test12","demo6","guest6","root6","admin19","admin20","admin21","user13","user14","test13","test14","demo7","guest7","root7"],
         "passwords": ["123456","password","12345678","qwerty","123456789","12345","1234","111111","1234567","dragon","123123","baseball","abc123","football","monkey","letmein","696969","shadow","master","666666","qwertyuiop","123321","mustang","1234567890","michael","654321","pussy","superman","1qaz2wsx","7777777","fuckyou","121212","000000","qazwsx","123qwe","killer","trustno1","jordan","jennifer","zxcvbnm","asdfgh","hunter","buster","soccer","harley","batman","andrew","tigger","sunshine","iloveyou","fuckme","2000","charlie","robert","thomas","hockey","ranger","daniel","starwars","klaster","112233","george","asshole","computer","michelle","jessica","pepper","1111","zxcvbn","555555","11111111","131313","freedom","777777","pass","fuck","maggie","159753","aaaaaa","ginger","princess","joshua","cheese","amanda","summer"],
@@ -103,3 +165,4 @@
         }
     }
 }
+
